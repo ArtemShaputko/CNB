@@ -15,6 +15,7 @@ class OutputWindow:
 
     def display_data(self, data):
         self.text_read.config(state=NORMAL)
-        self.text_read.insert(END, data + '\n')
+        self.text_read.insert(END, data)
+        self.text_read.insert(END, '\n')
         self.text_read.config(state=DISABLED)
         self.text_read.yview(END)

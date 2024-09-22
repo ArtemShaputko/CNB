@@ -36,7 +36,7 @@ class MainApp:
     def write_data(self, data):
         if data:
             try:
-                self.inputComPort.write_data(data)
+                self.inputComPort.packet_write(data)
             except Exception as e:
                 print(f"Ошибка отправки: {str(e)}")
 
@@ -48,6 +48,6 @@ class MainApp:
 
 if __name__ == "__main__":
     root = Tk()
-    root.geometry("500x400")
+    root.geometry("700x400")
     app = MainApp(root)
     root.mainloop()
