@@ -48,6 +48,6 @@ class MainApp:
 
 if __name__ == "__main__":
     root = Tk()
-    root.geometry("700x400")
+    root.geometry("1300x400")
     app = MainApp(root)
     root.mainloop()

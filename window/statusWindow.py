@@ -1,16 +1,6 @@
 from tkinter import *
 from tkinter import ttk
 
-def bin_to_str(data):
-    res = ''
-    for i in data:
-        if i == 0:
-            res += '0'
-        else:
-            res += chr(i)
-    return res
-
-
 class StatusWindow:
     def __init__(self, context, port):
         self.port = port
@@ -31,15 +21,19 @@ class StatusWindow:
         self.status_text.config(text=f"Port Baudrate: {self.port.baudrate} "
                                      f"baud\nBytes sent: {bytes_sent}")
 
-    def show_packets(self, data, changes):
+    def show_packets(self, data: bytes, changes, error_pos : int = None):
         self.packet.config(state=NORMAL)
-        self.packet.insert(END, bin_to_str(data) + '\n')
+        self.packet.insert(END, data.hex() + '\n')
         end_index = self.packet.index("end-1c")
         line_number = int(end_index.split(".")[0]) - 1
         for i in changes:
-            self.packet.tag_add("highlight",f"{line_number}.{i+10}", f"{line_number}.{i+14}" )
-        self.packet.tag_config("highlight", foreground="red")
-
+            self.packet.tag_add("staff",f"{line_number}.{i+20}", f"{line_number}.{i+28}" )
+        self.packet.tag_add("FCS", f"{line_number}.76", f"{line_number}.78")
+        if error_pos is not None:
+            self.packet.tag_add("Error", f"{line_number}.{int((39*8 - error_pos - 1)/4)}")
+        self.packet.tag_config("staff", foreground="blue")
+        self.packet.tag_config("FCS", foreground="green")
+        self.packet.tag_config("Error", foreground="red")
         self.packet.config(state=DISABLED)
         self.packet.yview(END)
 
