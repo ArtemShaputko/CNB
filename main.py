@@ -15,7 +15,7 @@ class MainApp:
         self.root = _root
         self.root.title("COM Port Communication")
 
-        self.root.columnconfigure(0, weight=1)
+        self.root.columnconfigure(0, weight=2)
         self.root.columnconfigure(1, weight=1)
         self.root.rowconfigure(0, weight=1)
         self.root.rowconfigure(1, weight=1)
@@ -48,6 +48,6 @@ class MainApp:
 
 if __name__ == "__main__":
     root = Tk()
-    root.geometry("1300x400")
+    root.geometry("750x500")
     app = MainApp(root)
     root.mainloop()

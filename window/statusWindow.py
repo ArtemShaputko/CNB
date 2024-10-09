@@ -37,3 +37,8 @@ class StatusWindow:
         self.packet.config(state=DISABLED)
         self.packet.yview(END)
 
+    def show_message(self, message):
+        self.packet.config(state=NORMAL)
+        self.packet.insert(END, message + '\n')
+        self.packet.config(state=DISABLED)
+
