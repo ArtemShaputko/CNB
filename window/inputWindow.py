@@ -16,4 +16,4 @@ class InputWindow:
 
     def send_data(self, event=None):
         data = self.entry.get("end-1c linestart", "end-1c lineend")
-        self.context.write_data(data)
+        self.context.station.data_buffer.append([data, self.context.stationWindow.priority_var.get()])

@@ -8,6 +8,16 @@ def get_serial_ports():
     ports = [port.device for port in serial.tools.list_ports.comports(include_links=True)]
     return ports if ports else ["No ports available "]
 
+def port_available(port_name: str) -> bool:
+    try:
+        # Проверка, доступен ли порт
+        with serial.Serial(port_name) as ser:
+            print(f"Порт {port_name} доступен.")
+            return True
+    except (serial.SerialException, OSError):
+        print(f"Порт {port_name} недоступен.")
+        return False
+
 
 def show_message(title,message):
     root = Tk()
@@ -35,7 +45,7 @@ class ControlWindow:
         self.port_combo.place(relx=0.5, rely= 0.25, anchor=N)
 
         self.parity_label = ttk.Label(controlFrame, text="Choose parity:")
-        self.parity_label.place(relx=0.5, rely= 0.4, anchor=N)
+        self.parity_label.place(relx=0.5, rely= 0.45, anchor=N)
 
         self.parity_var = StringVar(value='None')
         self.parity_combo = ttk.Combobox(controlFrame, textvariable=self.parity_var, values=['None',
@@ -43,10 +53,10 @@ class ControlWindow:
                                                                                             'Space',
                                                                                             'Even',
                                                                                             'Odd'])
-        self.parity_combo.place(relx=0.5, rely= 0.55, anchor=N)
+        self.parity_combo.place(relx=0.5, rely= 0.6, anchor=N)
 
         self.submit_button = Button(controlFrame, text="Accept", command=self.set_parity)
-        self.submit_button.place(relx=0.5, rely= 0.7, anchor=N)
+        self.submit_button.place(relx=0.5, rely= 1, anchor=S)
 
     def set_parity(self):
         selected_parity = None
@@ -61,7 +71,6 @@ class ControlWindow:
             selected_parity = serial.PARITY_NONE
         elif parity_var_string == "Space":
             selected_parity = serial.PARITY_SPACE
-
 
         selected_port = self.port_var.get()
 
